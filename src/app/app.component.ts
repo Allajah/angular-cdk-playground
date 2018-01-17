@@ -1,5 +1,5 @@
 import { Component, ViewContainerRef, OnInit } from '@angular/core';
-import { Overlay } from '@angular/cdk/overlay';
+import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
 import { ComponentPortal} from '@angular/cdk/portal';
 import { PanelComponent } from './components/panel/panel.component';
 
@@ -14,7 +14,12 @@ export class AppComponent implements OnInit {
 
   }
   ngOnInit() {
-    const overlayRef = this.overlay.create();
+    const positionStrategy = this.overlay.position().global().centerHorizontally().centerVertically();
+    const config = new OverlayConfig(<OverlayConfig>{
+      positionStrategy,
+      hasBackdrop: true
+    });
+    const overlayRef = this.overlay.create(config);
     overlayRef.attach(new ComponentPortal(PanelComponent));
   }
 }
